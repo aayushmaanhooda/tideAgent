@@ -8,9 +8,15 @@ class Settings(BaseSettings):
 
     # AWS
     aws_region: str = "ap-southeast-2"
-    aws_access_key_id: str 
-    aws_secret_access_key: str 
+    aws_access_key_id: str
+    aws_secret_access_key: str
     s3_bucket_name: str
+
+    # Claude
+    claude_api_key: str = ""
+
+    # HuggingFace
+    hf_token: str = ""
 
     # Database
     database_url: str = ""
