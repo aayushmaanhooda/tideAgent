@@ -1,0 +1,5 @@
+.venv
+.env
+*DST_STORE*
+*__pycache__*
+logo
