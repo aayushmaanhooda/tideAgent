@@ -110,6 +110,7 @@ export default function Annotate() {
   // Bulk upload state
   const [bulkQueue, setBulkQueue] = useState([])
   const [bulkRunning, setBulkRunning] = useState(false)
+  const [bulkError, setBulkError] = useState(null)
 
   function updateStep(key, status, detail) {
     setSteps(prev => ({ ...prev, [key]: { status, detail } }))
@@ -229,6 +230,13 @@ export default function Annotate() {
     const files = Array.from(e.target.files)
     if (!files.length) return
 
+    if (files.length > 5) {
+      setBulkError("Max 5 images allowed on the free plan. Please select 5 or fewer images.")
+      e.target.value = ""
+      return
+    }
+
+    setBulkError(null)
     const newItems = files.map((file, i) => ({
       id: `${Date.now()}-${i}`,
       file,
@@ -302,6 +310,7 @@ export default function Annotate() {
       </div>
 
       {error && <div className="anno-error">{error}</div>}
+      {bulkError && <div className="anno-error">{bulkError}</div>}
 
       {/* Single image pipeline status */}
       {Object.keys(steps).length > 0 && !done && (
