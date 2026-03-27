@@ -1,6 +1,8 @@
 import { useState, useRef, useEffect } from "react"
 import "./Annotate.css"
 
+const API_URL = import.meta.env.VITE_API_URL || ""
+
 const STEPS = [
   { key: "embedding",      label: "DINOv2 Embedding"  },
   { key: "similarity",     label: "Similarity Search"  },
@@ -103,7 +105,7 @@ export default function Annotate() {
     formData.append("file", file)
 
     try {
-      const res = await fetch("/v1/annotate", { method: "POST", body: formData })
+      const res = await fetch(`${API_URL}/v1/annotate`, { method: "POST", body: formData })
       if (!res.ok) throw new Error(`Server error ${res.status}`)
 
       const reader = res.body.getReader()
@@ -152,7 +154,7 @@ export default function Annotate() {
     formData.append("file", file)
 
     try {
-      const res = await fetch("/v1/annotate", { method: "POST", body: formData })
+      const res = await fetch(`${API_URL}/v1/annotate`, { method: "POST", body: formData })
       if (!res.ok) throw new Error(`Server error ${res.status}`)
 
       const reader = res.body.getReader()

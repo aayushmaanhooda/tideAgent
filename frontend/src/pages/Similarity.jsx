@@ -1,6 +1,8 @@
 import { useState, useRef } from "react"
 import "./Similarity.css"
 
+const API_URL = import.meta.env.VITE_API_URL || ""
+
 function ImageCard({ src, labels, caption, score }) {
   return (
     <div className="image-card">
@@ -43,7 +45,7 @@ export default function Similarity() {
     formData.append("file", file)
 
     try {
-      const res = await fetch("/v1/similar", {
+      const res = await fetch(`${API_URL}/v1/similar`, {
         method: "POST",
         body: formData,
       })
