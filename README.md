@@ -1,20 +1,6 @@
 <div align="center">
 
-<svg width="72" height="72" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <rect width="36" height="36" rx="6" fill="#0a0a1a"/>
-  <rect x="3" y="3" width="30" height="30" rx="4" stroke="#3b82f6" stroke-width="1.5" stroke-dasharray="4 2"/>
-  <path d="M6 20 Q9 15 12 20 Q15 25 18 20 Q21 15 24 20 Q27 25 30 20" stroke="url(#wg)" stroke-width="2.5" stroke-linecap="round" fill="none"/>
-  <path d="M3 8 L3 3 L8 3" stroke="#6366f1" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M28 3 L33 3 L33 8" stroke="#6366f1" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M3 28 L3 33 L8 33" stroke="#6366f1" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M28 33 L33 33 L33 28" stroke="#6366f1" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-  <defs>
-    <linearGradient id="wg" x1="6" y1="20" x2="30" y2="20" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#3b82f6"/>
-      <stop offset="1" stop-color="#8b5cf6"/>
-    </linearGradient>
-  </defs>
-</svg>
+<img src="frontend/public/favicon.svg" width="72" height="72" alt="Tide logo" />
 
 # Tide
 
