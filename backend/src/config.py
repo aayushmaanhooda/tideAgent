@@ -26,7 +26,14 @@ class Settings(BaseSettings):
     algorithm: str = "HS256"
     access_token_expire_minutes: int = 30
 
-    model_config = {"env_file": ".env", "env_file_encoding": "utf-8"}
+    # Modal
+    modal_token_id: str = ""
+    modal_token_secret: str = ""
+
+    # Deployment
+    backend_domain: str = "http://localhost:8000"
+
+    model_config = {"env_file": ".env", "env_file_encoding": "utf-8", "extra": "ignore"}
 
 
 settings = Settings()
