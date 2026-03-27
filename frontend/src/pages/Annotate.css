@@ -1,7 +1,7 @@
 .annotate-page {
-  max-width: 72rem;
+  max-width: 96rem;
   margin: 0 auto;
-  padding: 2.5rem 2rem 5rem;
+  padding: 2.5rem 3rem 5rem;
   font-family: system-ui, sans-serif;
 }
 
@@ -209,18 +209,20 @@
   display: flex;
   gap: 1.5rem;
   align-items: flex-start;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
 }
 
 /* ── Canvas ──────────────────────────────────────── */
 .canvas-wrapper {
   position: relative;
-  flex-shrink: 0;
+  flex: 1 1 auto;
+  min-width: 0;
 }
 
 .canvas-wrapper img {
-  max-width: 42rem;
-  max-height: 32rem;
+  width: 100%;
+  max-width: 56rem;
+  max-height: 40rem;
   object-fit: contain;
   border-radius: 0.875rem;
   border: 1px solid rgba(255,255,255,0.08);
@@ -237,8 +239,9 @@
 
 /* ── Detections list ─────────────────────────────── */
 .detections-list {
-  flex: 1;
-  min-width: 14rem;
+  flex: 0 0 18rem;
+  width: 18rem;
+  min-width: 16rem;
   background: rgba(15,15,30,0.6);
   border: 1px solid rgba(255,255,255,0.07);
   border-radius: 0.875rem;
@@ -246,6 +249,8 @@
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  max-height: 40rem;
+  overflow-y: auto;
 }
 
 .detections-title {
@@ -480,6 +485,106 @@
 }
 
 /* ── Responsive ──────────────────────────────────── */
+
+/* Large screens */
+@media (min-width: 1280px) {
+  .annotate-page {
+    padding: 3rem 4rem 6rem;
+  }
+
+  .anno-header h1 {
+    font-size: 2.25rem;
+  }
+
+  .anno-header p {
+    font-size: 1rem;
+  }
+
+  .canvas-wrapper img {
+    max-width: 68rem;
+    max-height: 52rem;
+  }
+
+  .detections-list {
+    flex: 0 0 22rem;
+    width: 22rem;
+    max-height: 52rem;
+    padding: 1.5rem;
+  }
+
+  .result-layout {
+    gap: 2rem;
+  }
+
+  .det-label {
+    font-size: 0.95rem;
+  }
+
+  .det-score {
+    font-size: 0.88rem;
+  }
+}
+
+@media (min-width: 1920px) {
+  .annotate-page {
+    max-width: 120rem;
+    padding: 4rem 6rem 7rem;
+  }
+
+  .anno-header h1 {
+    font-size: 2.75rem;
+  }
+
+  .anno-header p {
+    font-size: 1.1rem;
+  }
+
+  .canvas-wrapper img {
+    max-width: 100%;
+    max-height: 72rem;
+  }
+
+  .detections-list {
+    flex: 0 0 28rem;
+    width: 28rem;
+    max-height: 72rem;
+    padding: 2rem;
+  }
+
+  .det-label {
+    font-size: 1.05rem;
+  }
+
+  .det-score {
+    font-size: 0.95rem;
+  }
+
+  .detections-title {
+    font-size: 0.85rem;
+  }
+
+  .result-layout {
+    gap: 2.5rem;
+  }
+
+  .btn-primary,
+  .btn-secondary,
+  .btn-disabled {
+    padding: 0.9rem 1.8rem;
+    font-size: 1rem;
+  }
+
+  .result-header h2 {
+    font-size: 1.5rem;
+  }
+
+  .result-badge {
+    font-size: 0.9rem;
+    padding: 0.3rem 1rem;
+  }
+}
+
+/* Small screens */
 @media (max-width: 768px) {
   .annotate-page {
     padding: 1.5rem 1rem 3rem;
@@ -508,11 +613,18 @@
 
   .result-layout {
     flex-direction: column;
+    flex-wrap: wrap;
+  }
+
+  .canvas-wrapper {
+    flex: 1 1 100%;
   }
 
   .detections-list {
     width: 100%;
+    flex: 1 1 100%;
     min-width: 0;
+    max-height: 20rem;
   }
 
   .bulk-item-main {

@@ -558,6 +558,152 @@
   font-size: 0.75rem;
 }
 
+/* ── Large monitor (1920px+) ─────────────────────── */
+@media (min-width: 1920px) {
+  .navbar {
+    padding: 1.25rem 6rem;
+  }
+  .nav-brand { font-size: 1.3rem; }
+  .nav-links a { font-size: 1.05rem; }
+  .nav-links { gap: 2.5rem; }
+  .nav-cta { font-size: 1rem; padding: 0.65rem 1.4rem; }
+
+  .hero-inner {
+    padding: 0 6%;
+    gap: 5rem;
+  }
+
+  .hero-content {
+    max-width: 58rem;
+    gap: 2.5rem;
+  }
+
+  .hero-title {
+    font-size: 6.5rem;
+  }
+
+  .hero-desc {
+    font-size: 1.65rem;
+    max-width: 52rem;
+    line-height: 1.75;
+  }
+
+  .badge {
+    font-size: 1.15rem;
+    padding: 0.55rem 1.3rem;
+  }
+
+  .badge-dot {
+    width: 0.6rem;
+    height: 0.6rem;
+  }
+
+  .btn-primary,
+  .btn-secondary {
+    padding: 1.1rem 2.2rem;
+    font-size: 1.3rem;
+  }
+
+  .stat-num { font-size: 1.75rem; }
+  .stat-label { font-size: 1rem; }
+  .stat-divider { height: 2.75rem; }
+
+  .hero-card {
+    width: 42rem;
+  }
+
+  .card-header {
+    padding: 1.1rem 1.4rem;
+  }
+
+  .card-title { font-size: 1rem; }
+
+  .card-dots span {
+    width: 0.75rem;
+    height: 0.75rem;
+  }
+
+  .card-body {
+    padding: 1.75rem 1.4rem;
+  }
+
+  .pipeline-step {
+    font-size: 1.1rem;
+    padding: 0.8rem 0.65rem;
+    gap: 0.9rem;
+  }
+
+  .step-icon {
+    width: 2.25rem;
+    height: 2.25rem;
+    font-size: 1.1rem;
+  }
+
+  .step-check { font-size: 1rem; }
+
+  .step-connector {
+    height: 1rem;
+    margin-left: 1.75rem;
+  }
+
+  .card-labels {
+    padding: 1rem 1.4rem 1.4rem;
+    gap: 0.6rem;
+  }
+
+  .label-chip {
+    font-size: 0.95rem;
+    padding: 0.35rem 0.85rem;
+  }
+
+  .about-section {
+    padding: 8rem 6rem;
+  }
+
+  .section-title { font-size: 3rem; }
+  .section-sub { font-size: 1.2rem; margin-bottom: 4rem; }
+
+  .pipeline-explainer {
+    max-width: 80rem;
+  }
+
+  .explainer-row {
+    padding: 2.5rem 0;
+    gap: 2.25rem;
+  }
+
+  .explainer-title { font-size: 1.35rem; }
+  .explainer-desc { font-size: 1.1rem; line-height: 1.75; }
+  .explainer-tech { font-size: 0.95rem; }
+  .explainer-icon { font-size: 1.75rem; }
+  .explainer-step { font-size: 0.9rem; width: 2.75rem; }
+
+  .pricing-section {
+    padding: 8rem 6rem;
+  }
+
+  .pricing-cards {
+    max-width: 88rem;
+    gap: 2rem;
+  }
+
+  .pricing-card {
+    padding: 2.75rem;
+    gap: 1.5rem;
+  }
+
+  .plan-name { font-size: 1rem; }
+  .plan-price { font-size: 3.25rem; }
+  .plan-price span { font-size: 1.3rem; }
+  .plan-desc { font-size: 1.05rem; line-height: 1.65; }
+  .plan-features li { font-size: 1.05rem; gap: 0.65rem; }
+
+  .footer {
+    padding: 2.5rem 6rem;
+    font-size: 1rem;
+  }
+}
+
 /* ── Responsive ───────────────────────────────────── */
 @media (max-width: 768px) {
   .navbar {
