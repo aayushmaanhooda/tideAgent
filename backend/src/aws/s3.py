@@ -10,6 +10,16 @@ s3_client = boto3.client(
     aws_secret_access_key=settings.aws_secret_access_key,
 )
 
+def get_presigned_url(s3_path: str, expiry: int = 3600) -> str:
+    """Convert s3://bucket/key path to a presigned HTTPS URL."""
+    key = s3_path.replace(f"s3://{bucket_name}/", "")
+    return s3_client.generate_presigned_url(
+        "get_object",
+        Params={"Bucket": bucket_name, "Key": key},
+        ExpiresIn=expiry,
+    )
+
+
 try:
     s3_client.head_bucket(Bucket=bucket_name)
     print(f"Bucket '{bucket_name}' exists.")

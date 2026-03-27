@@ -1,0 +1,9 @@
+DINOV2 EMBEDDING TRIAL
+
+OLD WAY I DID
+CLS token = "It's a waterfront scene" (one overall summary)
+
+NEW WAY I DID
+Average patches = "There's water on the left, a bridge in the middle, people on the right, warm sky at the top" (average of all parts)
+
+cat ~/.modal.toml

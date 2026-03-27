@@ -77,11 +77,12 @@ def seed_labeled_data(num_images=300, bucket=bucket):
             })
         
         all_labeled.append({
-            "image_id": idx,
             "s3_path": f"s3://{bucket}/{s3_key}",
             "image_width": entry["width"],
             "image_height": entry["height"],
-            "annotations": annotations
+            "boxes": [a["bbox"] for a in annotations],
+            "labels": [a["label"] for a in annotations],
+            "confidence": [a["confidence"] for a in annotations],
         })
         
         if (idx + 1) % 50 == 0:

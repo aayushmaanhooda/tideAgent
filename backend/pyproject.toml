@@ -18,5 +18,8 @@ dependencies = [
     "pycocotools>=2.0.11",
     "pydantic-settings>=2.13.1",
     "sqlmodel>=0.0.37",
+    "modal>=0.73.0",
     "uvicorn>=0.42.0",
+    "python-multipart>=0.0.22",
+    "langchain-anthropic>=1.4.0",
 ]
