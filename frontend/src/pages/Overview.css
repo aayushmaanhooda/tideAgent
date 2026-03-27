@@ -972,15 +972,23 @@
 
 /* ── Responsive ──────────────────────────────────── */
 @media (max-width: 768px) {
-  .jnav { padding: 1rem 1.5rem; }
+  .jnav { padding: 1rem 1.25rem; }
   .jnav-links a { display: none; }
-  .j-hero { padding: 4rem 1.5rem 3rem; }
-  .j-section { padding: 4rem 1.5rem; }
+  .j-hero { padding: 3.5rem 1.25rem 2.5rem; }
+  .j-section { padding: 3rem 1.25rem; }
   .j-pipeline-line { left: 23px; }
   .j-arch-three { grid-template-columns: 1fr; }
-  .j-upload-ctx { flex-direction: column; }
-  .j-upload-right { align-items: flex-start; }
-  .j-hero-stats { gap: 0; }
-  .j-stat { padding: 0 1.25rem; }
-  .j-cta-box { padding: 2.5rem 1.5rem; }
+  .j-upload-ctx { flex-direction: column; gap: 1.5rem; }
+  .j-upload-right { align-items: flex-start; width: 100%; }
+  .j-upload-btn { width: 100%; justify-content: center; }
+  .j-hero-stats { gap: 0; flex-wrap: wrap; }
+  .j-stat { padding: 0.75rem 1rem; }
+  .j-stat-divider { display: none; }
+  .j-cta-box { padding: 2.5rem 1.25rem; }
+  .j-cta-title { font-size: 1.6rem; }
+  .j-pipe-step { gap: 1rem; }
+  .j-pipe-dot { width: 36px; height: 36px; min-width: 36px; }
+  .j-pipeline-line { left: 17px; }
+  .j-key-decisions { padding: 1.5rem 1.25rem; }
+  .j-issues { padding: 1.5rem 1.25rem; }
 }

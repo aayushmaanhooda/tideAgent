@@ -479,6 +479,52 @@
   max-height: 24rem;
 }
 
+/* ── Responsive ──────────────────────────────────── */
+@media (max-width: 768px) {
+  .annotate-page {
+    padding: 1.5rem 1rem 3rem;
+  }
+
+  .anno-actions {
+    flex-wrap: wrap;
+  }
+
+  .btn-primary,
+  .btn-secondary,
+  .btn-disabled {
+    flex: 1;
+    justify-content: center;
+    min-width: 0;
+  }
+
+  .canvas-wrapper img {
+    max-width: 100%;
+    max-height: 22rem;
+  }
+
+  .preview-img {
+    max-width: 100%;
+  }
+
+  .result-layout {
+    flex-direction: column;
+  }
+
+  .detections-list {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .bulk-item-main {
+    gap: 0.65rem;
+    padding: 0.65rem 0.75rem;
+  }
+
+  .bulk-steps {
+    display: none;
+  }
+}
+
 .anno-error {
   color: #f87171;
   font-size: 0.875rem;

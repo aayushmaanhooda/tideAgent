@@ -146,6 +146,23 @@
   word-break: break-word;
 }
 
+/* ── Responsive ──────────────────────────────────── */
+@media (max-width: 768px) {
+  .sim-page {
+    padding: 1.5rem 1rem 3rem;
+  }
+
+  .results-grid {
+    justify-content: center;
+  }
+
+  .image-card,
+  .image-card img {
+    width: 10rem;
+    height: 10rem;
+  }
+}
+
 .spinner {
   width: 12rem;
   height: 12rem;

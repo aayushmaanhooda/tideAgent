@@ -558,6 +558,69 @@
   font-size: 0.75rem;
 }
 
+/* ── Responsive ───────────────────────────────────── */
+@media (max-width: 768px) {
+  .navbar {
+    padding: 1rem 1.25rem;
+  }
+
+  .nav-links {
+    gap: 1rem;
+  }
+
+  .nav-links a:not(.nav-cta):not(.nav-secondary) {
+    display: none;
+  }
+
+  .hero-inner {
+    flex-direction: column;
+    padding: 2rem 1.25rem;
+    gap: 2rem;
+    text-align: center;
+    align-items: center;
+  }
+
+  .hero-title {
+    font-size: 2.6rem;
+  }
+
+  .hero-desc {
+    font-size: 1rem;
+  }
+
+  .hero-actions {
+    justify-content: center;
+  }
+
+  .hero-card {
+    width: 100%;
+    max-width: 24rem;
+  }
+
+  .stats {
+    justify-content: center;
+  }
+
+  .about-section {
+    padding: 3.5rem 1.25rem;
+  }
+
+  .pricing-section {
+    padding: 3.5rem 1.25rem;
+  }
+
+  .pricing-cards {
+    grid-template-columns: 1fr;
+    max-width: 26rem;
+  }
+
+  .footer {
+    padding: 1.5rem 1.25rem;
+    flex-wrap: wrap;
+    text-align: center;
+  }
+}
+
 /* ── Footer ───────────────────────────────────────── */
 .footer {
   margin-top: auto;
