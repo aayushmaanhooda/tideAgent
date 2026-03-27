@@ -24,10 +24,30 @@ function AnnotatedCanvas({ imageUrl, annotations, naturalWidth, naturalHeight })
     const canvas = canvasRef.current
     if (!img || !canvas || !annotations.length) return
 
-    const scaleX = img.clientWidth / naturalWidth
-    const scaleY = img.clientHeight / naturalHeight
-    canvas.width = img.clientWidth
-    canvas.height = img.clientHeight
+    const elemW = img.clientWidth
+    const elemH = img.clientHeight
+    canvas.width = elemW
+    canvas.height = elemH
+
+    // With object-fit: contain the image content may not fill the full element.
+    // Calculate the actual rendered size and offset to avoid boxes spilling outside.
+    const imgAspect = naturalWidth / naturalHeight
+    const elemAspect = elemW / elemH
+    let renderedW, renderedH, offsetX, offsetY
+    if (imgAspect > elemAspect) {
+      renderedW = elemW
+      renderedH = elemW / imgAspect
+      offsetX = 0
+      offsetY = (elemH - renderedH) / 2
+    } else {
+      renderedH = elemH
+      renderedW = elemH * imgAspect
+      offsetX = (elemW - renderedW) / 2
+      offsetY = 0
+    }
+
+    const scaleX = renderedW / naturalWidth
+    const scaleY = renderedH / naturalHeight
 
     const ctx = canvas.getContext("2d")
     ctx.clearRect(0, 0, canvas.width, canvas.height)
@@ -35,8 +55,10 @@ function AnnotatedCanvas({ imageUrl, annotations, naturalWidth, naturalHeight })
     annotations.forEach(({ bbox, label, confidence }, i) => {
       const color = BOX_COLORS[i % BOX_COLORS.length]
       const [x1, y1, x2, y2] = bbox
-      const sx = x1 * scaleX, sy = y1 * scaleY
-      const sw = (x2 - x1) * scaleX, sh = (y2 - y1) * scaleY
+      const sx = offsetX + x1 * scaleX
+      const sy = offsetY + y1 * scaleY
+      const sw = (x2 - x1) * scaleX
+      const sh = (y2 - y1) * scaleY
 
       ctx.strokeStyle = color
       ctx.lineWidth = 2
@@ -47,7 +69,7 @@ function AnnotatedCanvas({ imageUrl, annotations, naturalWidth, naturalHeight })
       ctx.font = "bold 11px system-ui"
       const tw = ctx.measureText(text).width
       const labelY = sy >= 18 ? sy - 18 : sy
-      const labelX = Math.min(sx, canvas.width - tw - 10)
+      const labelX = Math.min(sx, offsetX + renderedW - tw - 10)
       ctx.fillStyle = color
       ctx.fillRect(labelX, labelY, tw + 10, 18)
 
