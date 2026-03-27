@@ -1,8 +1,6 @@
 <div align="center">
 
-<img src="frontend/public/favicon.svg" width="72" height="72" alt="Tide logo" />
-
-# Tide
+<h1><img src="frontend/public/favicon.svg" width="40" height="40" alt="Tide logo" style="vertical-align:middle; margin-right:10px" /> Tide</h1>
 
 **AI-powered annotation agent for computer vision teams**
 
