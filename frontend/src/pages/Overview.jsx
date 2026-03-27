@@ -162,10 +162,10 @@ export default function Journey() {
 
       {/* Navbar */}
       <nav className="jnav">
-        <div className="jnav-logo" onClick={() => navigate("/")}>
+        <a className="jnav-logo" href="/">
           <Logo />
           <span className="jnav-brand">Tide Agent</span>
-        </div>
+        </a>
         <div className="jnav-links">
           <a href="#data">Data</a>
           <a href="#pipeline">Pipeline</a>

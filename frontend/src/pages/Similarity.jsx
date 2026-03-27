@@ -1,5 +1,4 @@
 import { useState, useRef } from "react"
-import { useNavigate } from "react-router-dom"
 import "./Similarity.css"
 
 function ImageCard({ src, labels, caption, score }) {
@@ -28,7 +27,7 @@ export default function Similarity() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
   const inputRef = useRef()
-  const navigate = useNavigate()
+
 
   async function handleUpload(e) {
     const file = e.target.files[0]
@@ -62,12 +61,12 @@ export default function Similarity() {
   return (
     <div className="sim-page">
       <header className="sim-header">
-        <button className="back-btn" onClick={() => navigate("/")}>
+        <a className="back-btn" href="/">
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
             <path d="M13 8H3M7 4l-4 4 4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
           Tide Agent
-        </button>
+        </a>
         <h1>Similarity Search</h1>
         <p>Upload an image to find visually similar examples and get Claude's annotation suggestions</p>
       </header>

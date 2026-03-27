@@ -28,10 +28,10 @@ export default function Landing() {
 
       {/* Navbar */}
       <nav className="navbar">
-        <div className="nav-logo" onClick={() => navigate("/")} style={{ cursor: "pointer" }}>
+        <a className="nav-logo" href="/">
           <Logo />
           <span className="nav-brand">Tide Agent</span>
-        </div>
+        </a>
         <div className="nav-links">
           <a href="#about">About</a>
           <a href="#pricing">Pricing</a>
@@ -45,7 +45,7 @@ export default function Landing() {
       <section className="hero">
         <div className="glow glow-blue" />
         <div className="glow glow-purple" />
-
+        <div className="hero-inner">
         <div className="hero-content">
           <div className="badge">
             <span className="badge-dot" />
@@ -172,6 +172,7 @@ export default function Landing() {
             <span className="label-chip">bicycle 91%</span>
             <span className="label-chip dim">+ 4 objects</span>
           </div>
+        </div>
         </div>
       </section>
 

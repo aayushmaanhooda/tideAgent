@@ -26,6 +26,10 @@
   align-items: center;
   gap: 0.6rem;
   cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  text-decoration: none;
 }
 
 .jnav-brand {

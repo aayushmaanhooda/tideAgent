@@ -1,5 +1,4 @@
 import { useState, useRef, useEffect } from "react"
-import { useNavigate } from "react-router-dom"
 import "./Annotate.css"
 
 const STEPS = [
@@ -69,7 +68,6 @@ function AnnotatedCanvas({ imageUrl, annotations, naturalWidth, naturalHeight })
 }
 
 export default function Annotate() {
-  const navigate = useNavigate()
   const inputRef = useRef()
   const bulkInputRef = useRef()
 
@@ -240,12 +238,12 @@ export default function Annotate() {
   return (
     <div className="annotate-page">
       <header className="anno-header">
-        <button className="back-btn" onClick={() => navigate("/")}>
+        <a className="back-btn" href="/">
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
             <path d="M13 8H3M7 4l-4 4 4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
           Tide Agent
-        </button>
+        </a>
         <h1>Annotate Image</h1>
         <p>Upload an image and the agent will detect and label every object automatically</p>
       </header>
