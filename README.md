@@ -23,7 +23,6 @@ Tide is a CVAT-style annotation agent built for AI public safety companies. It l
 
 The agent doesn't just run inference. It gets better over time: every annotation a human approves gets added back as context, so the more you use it, the more accurately it mirrors your team's labeling style.
 
-Built for [ResQVision](https://resqvision.com) — an AI company focused on public safety applications like beach and water surveillance.
 
 ---
 
