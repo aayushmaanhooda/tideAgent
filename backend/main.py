@@ -25,6 +25,7 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         "http://localhost:5173",
+        "https://tide-agent.vercel.app",
         "http://tide-agent.duckdns.org",
         "https://tide-agent.duckdns.org",
     ],
