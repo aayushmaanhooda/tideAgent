@@ -98,7 +98,7 @@ def run_grounding_dino(image_bytes: bytes, labels: list) -> list:
     results = processor.post_process_grounded_object_detection(
         outputs,
         inputs["input_ids"],
-        threshold=0.2,
+        threshold=0.28,
         target_sizes=[image.size[::-1]],
     )[0]
 

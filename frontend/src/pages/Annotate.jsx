@@ -42,14 +42,17 @@ function AnnotatedCanvas({ imageUrl, annotations, naturalWidth, naturalHeight })
       ctx.lineWidth = 2
       ctx.strokeRect(sx, sy, sw, sh)
 
-      const text = `${label} ${(confidence * 100).toFixed(0)}%`
+      const displayLabel = label && label.trim() ? label.trim() : "object"
+      const text = `${displayLabel} ${(confidence * 100).toFixed(0)}%`
       ctx.font = "bold 11px system-ui"
       const tw = ctx.measureText(text).width
+      const labelY = sy >= 18 ? sy - 18 : sy
+      const labelX = Math.min(sx, canvas.width - tw - 10)
       ctx.fillStyle = color
-      ctx.fillRect(sx, sy - 18, tw + 10, 18)
+      ctx.fillRect(labelX, labelY, tw + 10, 18)
 
       ctx.fillStyle = "#fff"
-      ctx.fillText(text, sx + 5, sy - 5)
+      ctx.fillText(text, labelX + 5, labelY + 13)
     })
   }
 
