@@ -22,4 +22,5 @@ dependencies = [
     "uvicorn>=0.42.0",
     "python-multipart>=0.0.22",
     "langchain-anthropic>=1.4.0",
+    "langchain-openai>=0.3.0",
 ]

@@ -15,6 +15,9 @@ class Settings(BaseSettings):
     # Claude
     claude_api_key: str = ""
 
+    # OpenAI (fallback)
+    openai_api_key: str = ""
+
     # HuggingFace
     hf_token: str = ""
 

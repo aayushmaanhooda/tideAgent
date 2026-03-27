@@ -1,5 +1,6 @@
 import base64
 from langchain_anthropic import ChatAnthropic
+from langchain_openai import ChatOpenAI
 from langchain_core.messages import HumanMessage, SystemMessage
 from pydantic import BaseModel, Field
 from src.config import settings
@@ -49,13 +50,19 @@ class DetectionLabels(BaseModel):
     labels: list[str] = Field(description="All object categories to detect in the new image")
 
 
-llm = ChatAnthropic(
+claude_llm = ChatAnthropic(
     model="claude-opus-4-6",
     api_key=settings.claude_api_key,
     max_tokens=1024,
 )
+claude_structured = claude_llm.with_structured_output(DetectionLabels, method="json_schema")
 
-structured_llm = llm.with_structured_output(DetectionLabels, method="json_schema")
+openai_llm = ChatOpenAI(
+    model="gpt-4o",
+    api_key=settings.openai_api_key,
+    max_tokens=1024,
+)
+openai_structured = openai_llm.with_structured_output(DetectionLabels)
 
 
 def _encode_image(image_bytes: bytes) -> str:
@@ -70,21 +77,11 @@ def _mime_type(image_bytes: bytes) -> str:
         return "image/webp"
     if image_bytes[:3] == b"GIF":
         return "image/gif"
-    return "image/jpeg"  # default
+    return "image/jpeg"
 
 
-async def get_detection_labels(
-    new_image_bytes: bytes,
-    context: list[dict],  # each: {"image_bytes": bytes, "labels": list, "boxes": list}
-) -> list[str]:
-    """
-    Sends the new image + context examples to Claude Vision via Anthropic API.
-    Runs async — no executor needed.
-    Returns a list of label strings to detect in the new image.
-    """
+def _build_claude_content(new_image_bytes: bytes, context: list[dict]) -> list:
     content = []
-
-    # Add context images with their annotations
     for i, ctx in enumerate(context):
         content.append({
             "type": "text",
@@ -95,8 +92,6 @@ async def get_detection_labels(
             "base64": _encode_image(ctx["image_bytes"]),
             "mime_type": _mime_type(ctx["image_bytes"]),
         })
-
-    # Add the new image to annotate
     content.append({
         "type": "text",
         "text": "Now here is the NEW image that needs to be annotated. Based on the reference images above and your own detailed visual analysis, list every object category that should be detected in this image:"
@@ -106,11 +101,61 @@ async def get_detection_labels(
         "base64": _encode_image(new_image_bytes),
         "mime_type": _mime_type(new_image_bytes),
     })
+    return content
 
+
+def _build_openai_content(new_image_bytes: bytes, context: list[dict]) -> list:
+    content = []
+    for i, ctx in enumerate(context):
+        mime = _mime_type(ctx["image_bytes"])
+        b64 = _encode_image(ctx["image_bytes"])
+        content.append({
+            "type": "text",
+            "text": f"Reference image {i + 1} — annotated labels: {ctx['labels']}\nBounding boxes (x1,y1,x2,y2): {ctx['boxes']}"
+        })
+        content.append({
+            "type": "image_url",
+            "image_url": {"url": f"data:{mime};base64,{b64}"}
+        })
+    mime = _mime_type(new_image_bytes)
+    b64 = _encode_image(new_image_bytes)
+    content.append({
+        "type": "text",
+        "text": "Now here is the NEW image that needs to be annotated. Based on the reference images above and your own detailed visual analysis, list every object category that should be detected in this image:"
+    })
+    content.append({
+        "type": "image_url",
+        "image_url": {"url": f"data:{mime};base64,{b64}"}
+    })
+    return content
+
+
+def _is_overloaded(error: Exception) -> bool:
+    msg = str(error).lower()
+    return "529" in msg or "overloaded" in msg
+
+
+async def get_detection_labels(
+    new_image_bytes: bytes,
+    context: list[dict],
+) -> list[str]:
+    # Try Claude first
+    try:
+        messages = [
+            SystemMessage(content=SYSTEM_PROMPT),
+            HumanMessage(content=_build_claude_content(new_image_bytes, context)),
+        ]
+        result = await claude_structured.ainvoke(messages)
+        return result.labels
+    except Exception as e:
+        if not _is_overloaded(e):
+            raise
+        print(f"Claude overloaded, falling back to GPT-4o: {e}")
+
+    # Fallback to GPT-4o
     messages = [
         SystemMessage(content=SYSTEM_PROMPT),
-        HumanMessage(content=content),
+        HumanMessage(content=_build_openai_content(new_image_bytes, context)),
     ]
-
-    result = await structured_llm.ainvoke(messages)
+    result = await openai_structured.ainvoke(messages)
     return result.labels
