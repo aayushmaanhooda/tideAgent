@@ -91,6 +91,59 @@
   letter-spacing: 0.05em;
 }
 
+/* ── Context toggle ──────────────────────────────── */
+.context-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  cursor: pointer;
+  user-select: none;
+  padding: 0.45rem 1rem;
+  border-radius: 0.6rem;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  transition: background 0.2s, border-color 0.2s;
+}
+.context-toggle:hover {
+  background: rgba(255,255,255,0.07);
+  border-color: rgba(255,255,255,0.12);
+}
+.toggle-label {
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: #94a3b8;
+  white-space: nowrap;
+}
+.toggle-track {
+  position: relative;
+  display: inline-block;
+  width: 2.5rem;
+  height: 1.35rem;
+  border-radius: 999rem;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.1);
+  transition: background 0.2s, border-color 0.2s;
+  cursor: pointer;
+}
+.toggle-track.toggle-on {
+  background: linear-gradient(135deg, #3b82f6, #6366f1);
+  border-color: rgba(99,102,241,0.5);
+}
+.toggle-thumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+  transition: transform 0.2s;
+}
+.toggle-on .toggle-thumb {
+  transform: translateX(1.15rem);
+}
+
 /* ── Compact status bar ──────────────────────────── */
 .status-bar {
   display: flex;
@@ -221,8 +274,8 @@
 
 .canvas-wrapper img {
   width: 100%;
-  max-width: 56rem;
-  max-height: 40rem;
+  max-width: 28rem;
+  max-height: 22rem;
   object-fit: contain;
   border-radius: 0.875rem;
   border: 1px solid rgba(255,255,255,0.08);
@@ -501,14 +554,14 @@
   }
 
   .canvas-wrapper img {
-    max-width: 68rem;
-    max-height: 52rem;
+    max-width: 32rem;
+    max-height: 26rem;
   }
 
   .detections-list {
     flex: 0 0 22rem;
     width: 22rem;
-    max-height: 52rem;
+    max-height: 26rem;
     padding: 1.5rem;
   }
 
@@ -540,14 +593,14 @@
   }
 
   .canvas-wrapper img {
-    max-width: 100%;
-    max-height: 72rem;
+    max-width: 36rem;
+    max-height: 28rem;
   }
 
   .detections-list {
     flex: 0 0 28rem;
     width: 28rem;
-    max-height: 72rem;
+    max-height: 28rem;
     padding: 2rem;
   }
 

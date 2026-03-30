@@ -6,7 +6,7 @@ from src.db_service import find_similar_images
 from src.embeddings import generate_embeddings_via_modal
 from src.grounding import run_grounding_dino_via_modal
 from src.aws.s3 import get_presigned_url, s3_client, bucket_name
-from src.agent import get_detection_labels
+from src.agent import get_detection_labels, get_context_free_labels
 
 router = APIRouter()
 
@@ -97,6 +97,47 @@ async def annotate_image(file: UploadFile = File(...)) -> AsyncIterable[ServerSe
                                     "detail": f"Detected {len(unique_labels)} label types: {', '.join(unique_labels[:6])}"})
 
         # ── Step 4: Grounding DINO → bounding boxes ───────────────
+        yield ServerSentEvent(data={"type": "step", "step": "grounding_dino", "status": "running",
+                                    "detail": "Running Grounding DINO for precise bounding boxes..."})
+        annotations = await run_grounding_dino_via_modal(image_bytes, unique_labels)
+        yield ServerSentEvent(data={"type": "step", "step": "grounding_dino", "status": "done",
+                                    "detail": f"Found {len(annotations)} objects"})
+
+        # ── Final result ──────────────────────────────────────────
+        from PIL import Image
+        import io
+        pil = Image.open(io.BytesIO(image_bytes))
+        width, height = pil.size
+
+        yield ServerSentEvent(data={
+            "type": "result",
+            "annotations": annotations,
+            "width": width,
+            "height": height,
+        })
+
+    except Exception as e:
+        yield ServerSentEvent(data={"type": "error", "message": str(e)})
+
+
+@router.post("/context-free", response_class=EventSourceResponse)
+async def context_free_annotate(file: UploadFile = File(...)) -> AsyncIterable[ServerSentEvent]:
+    """Annotate an image without COCO context — Claude analyzes the image directly."""
+    if not file.content_type.startswith("image/"):
+        raise HTTPException(status_code=400, detail="File must be an image")
+
+    image_bytes = await file.read()
+
+    try:
+        # ── Step 1: Claude Vision → labels (no context) ──────────
+        yield ServerSentEvent(data={"type": "step", "step": "claude", "status": "running",
+                                    "detail": "Claude analyzing image (no context)..."})
+        raw_labels = await get_context_free_labels(image_bytes)
+        unique_labels = list(dict.fromkeys(raw_labels))
+        yield ServerSentEvent(data={"type": "step", "step": "claude", "status": "done",
+                                    "detail": f"Detected {len(unique_labels)} label types: {', '.join(unique_labels[:6])}"})
+
+        # ── Step 2: Grounding DINO → bounding boxes ───────────────
         yield ServerSentEvent(data={"type": "step", "step": "grounding_dino", "status": "running",
                                     "detail": "Running Grounding DINO for precise bounding boxes..."})
         annotations = await run_grounding_dino_via_modal(image_bytes, unique_labels)

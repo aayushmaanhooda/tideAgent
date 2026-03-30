@@ -3,9 +3,14 @@ import "./Annotate.css"
 
 const API_URL = import.meta.env.VITE_API_URL || ""
 
-const STEPS = [
+const STEPS_WITH_CONTEXT = [
   { key: "embedding",      label: "DINOv2 Embedding"  },
   { key: "similarity",     label: "Similarity Search"  },
+  { key: "claude",         label: "Claude Vision"      },
+  { key: "grounding_dino", label: "Grounding DINO"     },
+]
+
+const STEPS_CONTEXT_FREE = [
   { key: "claude",         label: "Claude Vision"      },
   { key: "grounding_dino", label: "Grounding DINO"     },
 ]
@@ -98,6 +103,9 @@ export default function Annotate() {
   const inputRef = useRef()
   const bulkInputRef = useRef()
 
+  // Context toggle
+  const [contextFree, setContextFree] = useState(false)
+
   // Single upload state
   const [uploadedImage, setUploadedImage] = useState(null)
   const [steps, setSteps] = useState({})
@@ -131,7 +139,8 @@ export default function Annotate() {
     formData.append("file", file)
 
     try {
-      const res = await fetch(`${API_URL}/v1/annotate`, { method: "POST", body: formData })
+      const endpoint = contextFree ? `${API_URL}/v1/context-free` : `${API_URL}/v1/annotate`
+      const res = await fetch(endpoint, { method: "POST", body: formData })
       if (!res.ok) throw new Error(`Server error ${res.status}`)
 
       const reader = res.body.getReader()
@@ -180,7 +189,8 @@ export default function Annotate() {
     formData.append("file", file)
 
     try {
-      const res = await fetch(`${API_URL}/v1/annotate`, { method: "POST", body: formData })
+      const endpoint = contextFree ? `${API_URL}/v1/context-free` : `${API_URL}/v1/annotate`
+      const res = await fetch(endpoint, { method: "POST", body: formData })
       if (!res.ok) throw new Error(`Server error ${res.status}`)
 
       const reader = res.body.getReader()
@@ -305,6 +315,13 @@ export default function Annotate() {
           {bulkRunning ? "Processing..." : "Bulk Upload"}
         </button>
 
+        <label className="context-toggle" title="Skip COCO similarity search — Claude analyzes the image on its own">
+          <span className={`toggle-track ${contextFree ? "toggle-on" : ""}`} onClick={() => !running && !bulkRunning && setContextFree(prev => !prev)}>
+            <span className="toggle-thumb" />
+          </span>
+          <span className="toggle-label">Remove COCO Context</span>
+        </label>
+
         <input ref={inputRef} type="file" accept="image/*" onChange={handleUpload} style={{ display: "none" }} />
         <input ref={bulkInputRef} type="file" accept="image/*" multiple onChange={handleBulkUpload} style={{ display: "none" }} />
       </div>
@@ -315,10 +332,11 @@ export default function Annotate() {
       {/* Single image pipeline status */}
       {Object.keys(steps).length > 0 && !done && (
         <div className="status-bar">
-          {STEPS.map(({ key, label }, i) => {
+          {(contextFree ? STEPS_CONTEXT_FREE : STEPS_WITH_CONTEXT).map(({ key, label }, i) => {
             const s = steps[key]
             if (!s) return null
-            const isLast = i === STEPS.length - 1
+            const activeSteps = contextFree ? STEPS_CONTEXT_FREE : STEPS_WITH_CONTEXT
+            const isLast = i === activeSteps.length - 1
             return (
               <span key={key} className="status-crumb">
                 <span className={`status-icon ${s.status}`}>
@@ -390,7 +408,7 @@ export default function Annotate() {
 
                     {item.status === "running" && (
                       <div className="bulk-steps">
-                        {STEPS.map(({ key, label }) => {
+                        {(contextFree ? STEPS_CONTEXT_FREE : STEPS_WITH_CONTEXT).map(({ key, label }) => {
                           const s = item.steps[key]
                           if (!s) return null
                           return (
